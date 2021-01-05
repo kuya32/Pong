@@ -15,11 +15,14 @@ public class PlayerController {
     }
 
     public void update(double dt) {
-        if (keyListener.isKeyPressed(KeyEvent.VK_DOWN)) {
-            moveDown(dt);
-        } else if (keyListener.isKeyPressed(KeyEvent.VK_UP)) {
-            moveUp(dt);
+        if (keyListener != null) {
+            if (keyListener.isKeyPressed(KeyEvent.VK_DOWN)) {
+                moveDown(dt);
+            } else if (keyListener.isKeyPressed(KeyEvent.VK_UP)) {
+                moveUp(dt);
+            }
         }
+
     }
 
     public void moveUp(double dt) {
