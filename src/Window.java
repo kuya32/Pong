@@ -10,6 +10,8 @@ public class Window extends JFrame implements Runnable {
     public PlayerController playerController;
     public AIController aiController;
     public Text leftScoreText, rightScoreText;
+    public boolean isRunning = true;
+    public ML mouseListener = new ML();
 
     public Window() {
         this.setSize(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
@@ -18,6 +20,8 @@ public class Window extends JFrame implements Runnable {
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.addKeyListener(keyListener);
+        this.addMouseListener(mouseListener);
+        this.addMouseMotionListener(mouseListener);
         Constants.TOOLBAR_HEIGHT = this.getInsets().top;
         Constants.INSETS_BOTTOM = this.getInsets().bottom;
 
@@ -53,8 +57,15 @@ public class Window extends JFrame implements Runnable {
         g2.drawImage(dbImage, 0, 0, this);
 
         playerController.update(dt);
-        aiController.update(dt);
+//        aiController.update(dt);
         ball.update(dt);
+
+        if (mouseListener.getMouseX() > 0 && mouseListener.getMouseY() > 0) {
+            if (mouseListener.isMousePressed()) {
+                ball.vx = -150.0;
+                ball.vy = 10.0;
+            }
+        }
     }
 
     public void draw(Graphics g) {
@@ -69,14 +80,21 @@ public class Window extends JFrame implements Runnable {
         ballRect.draw(g2);
     }
 
+    public void stop() {
+        isRunning = false;
+    }
+
     public void run() {
         double lastFrameTime = 0.0;
-        while (true) {
+        while (isRunning) {
             double time = Time.getTime();
             double deltaTime = time - lastFrameTime;
             lastFrameTime = time;
 
             update(deltaTime);
         }
+
+        this.dispose();
+        return;
     }
 }
