@@ -5,7 +5,7 @@ public class Window extends JFrame implements Runnable {
 
     public Graphics2D g2;
     public KL keyListener = new KL();
-    public Rect playerOne, ai, ballRect;
+    public Rect playerOne, ai, ballRect, divider;
     public Ball ball;
     public PlayerController playerController;
     public AIController aiController;
@@ -28,9 +28,9 @@ public class Window extends JFrame implements Runnable {
         g2 = (Graphics2D) this.getGraphics();
 
         leftScoreText = new Text(0, new Font("Times New Roman", Font.PLAIN, Constants.TEXT_SIZE),
-                Constants.TEXT_X_POS, Constants.TEXT_Y_POS);
+                (Constants.SCREEN_WIDTH / 2) - 25, Constants.TEXT_Y_POS);
         rightScoreText = new Text(0, new Font("Times New Roman", Font.PLAIN, Constants.TEXT_SIZE),
-                Constants.SCREEN_WIDTH - Constants.TEXT_X_POS - Constants.TEXT_SIZE, Constants.TEXT_Y_POS);
+                (Constants.SCREEN_WIDTH / 2) + 16, Constants.TEXT_Y_POS);
 
         playerOne = new Rect(Constants.HZ_PADDING,
                 35,
@@ -38,6 +38,8 @@ public class Window extends JFrame implements Runnable {
                 Constants.PADDLE_HEIGHT,
                 Constants.PADDLE_COLOR);
         playerController = new PlayerController(playerOne, keyListener);
+        divider = new Rect((Constants.SCREEN_WIDTH / 2) + 5, 0,
+                1, Constants.SCREEN_HEIGHT, Constants.PADDLE_COLOR);
 
         ai = new Rect(Constants.SCREEN_WIDTH - Constants.PADDLE_WIDTH - Constants.HZ_PADDING,
                 35,
@@ -57,7 +59,7 @@ public class Window extends JFrame implements Runnable {
         g2.drawImage(dbImage, 0, 0, this);
 
         playerController.update(dt);
-//        aiController.update(dt);
+        aiController.update(dt);
         ball.update(dt);
 
         if (mouseListener.getMouseX() > 0 && mouseListener.getMouseY() > 0) {
@@ -78,6 +80,7 @@ public class Window extends JFrame implements Runnable {
         playerOne.draw(g2);
         ai.draw(g2);
         ballRect.draw(g2);
+        divider.draw(g2);
     }
 
     public void stop() {

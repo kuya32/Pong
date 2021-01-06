@@ -18,7 +18,7 @@ public class Constants {
 
     public static final double MAX_ANGLE = 45;
 
-    public static final int TEXT_Y_POS = 100;
+    public static final int TEXT_Y_POS = 75;
     public static final int TEXT_X_POS = 10;
     public static final int TEXT_SIZE = 40;
     public static final int WINNING_SCORE = 5;
